@@ -6,6 +6,8 @@
     <title>wheely</title>
     <link rel="icon" type="image/webp" href="flag.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cool fonts with special characters -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Fredoka:wght@400;600&family=Righteous&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* Custom styles for the flag stripes */
         .flag-stripe {
@@ -48,6 +50,83 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Animated Page Title with sliding colored orbs
+    function createSlidingOrbsTitle() {
+        const coloredOrbs = ['🔴', '🟠', '🟡', '🟢', '🔵', '🟣'];
+        let startIndex = 0;
+        
+        function animateTitle() {
+            // Show 6 orbs sliding to the right (full rainbow)
+            let title = '';
+            for (let i = 0; i < 6; i++) {
+                const orbIndex = (startIndex + i) % coloredOrbs.length;
+                title += coloredOrbs[orbIndex];
+            }
+            
+            document.title = title;
+            
+            // Update favicon color based on leftmost orb
+            window.currentLeftmostColorIndex = startIndex % coloredOrbs.length;
+            
+            startIndex = (startIndex + 1) % coloredOrbs.length;
+            setTimeout(animateTitle, 300); // Slide every 300ms
+        }
+        
+        animateTitle();
+    }
+    
+    // Animated Favicon - Pulsing ball that changes color
+    function createPulsingFavicon() {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 32;
+        canvas.height = 32;
+        
+        const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#2563eb', '#9333ea'];
+        let pulsePhase = 0;
+        
+        function animate() {
+            ctx.clearRect(0, 0, 32, 32);
+            
+            // Calculate pulsing radius (between 8 and 14 pixels)
+            const baseRadius = 11;
+            const pulseAmount = 3;
+            const radius = baseRadius + Math.sin(pulsePhase) * pulseAmount;
+            
+            // Get current color based on leftmost title orb
+            const colorIndex = window.currentLeftmostColorIndex || 0;
+            const currentColor = colors[colorIndex];
+            
+            // Draw the pulsing circle
+            ctx.beginPath();
+            ctx.arc(16, 16, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = currentColor;
+            ctx.fill();
+            
+            // Add a subtle white highlight for 3D effect
+            ctx.beginPath();
+            ctx.arc(13, 13, radius * 0.3, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.fill();
+            
+            const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'icon';
+            link.href = canvas.toDataURL();
+            document.getElementsByTagName('head')[0].appendChild(link);
+            
+            pulsePhase += 0.15; // Control pulse speed
+            setTimeout(animate, 100); // 10 FPS for smooth animation
+        }
+        
+        animate();
+    }
+    
+    // Start animations
+    createSlidingOrbsTitle();
+    createPulsingFavicon();
+
+    // Mouse avoidance code
     const text = document.getElementById('avoidable-text');
     const container = document.querySelector('.relative');
     
@@ -85,7 +164,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Calculate required offset to maintain minimum distance
-            const pushDistance = requiredDistance - distance;
+            const targetDistance = requiredDistance;
+            const currentDistance = distance;
+            const pushDistance = targetDistance - currentDistance;
             
             // Apply strong repulsion force
             const force = Math.max(1, pushDistance / minDistance * forceMultiplier);
