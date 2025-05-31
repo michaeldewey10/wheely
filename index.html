@@ -77,20 +77,9 @@
         }
 
 
-        /* Material Design 3 elevation */
-        .md-elevation-1 {
-            box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
-                        0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-        }
-
-        .md-elevation-2 {
-            box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 
-                        0px 1px 2px 0px rgba(0, 0, 0, 0.30);
-        }
-
         .md-elevation-3 {
-            box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 
-                        0px 1px 3px 0px rgba(0, 0, 0, 0.30);
+            box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 
+                        0 1px 3px 0 rgba(0, 0, 0, 0.30);
         }
 
 
@@ -104,14 +93,14 @@
 
         /* Material Design 3 state changes */
         .md-card:hover {
-            box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 
-                        0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+            box-shadow: 0 8px 12px 6px rgba(0, 0, 0, 0.15), 
+                        0 4px 4px 0 rgba(0, 0, 0, 0.30);
             transform: translateY(-2px);
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
-<div class="md-card md-elevation-3 relative w-full max-w-4xl h-screen max-h-[800px] overflow-hidden flex flex-col">
+<div class="md-card md-elevation-3 relative w-full max-w-4xl h-screen max-h-[800] overflow-hidden flex flex-col">
     <div class="flag-stripe" style="background-color: var(--pride-red);"></div>
     <div class="flag-stripe" style="background-color: var(--pride-orange);"></div>
     <div class="flag-stripe" style="background-color: var(--pride-yellow);"></div>
@@ -121,7 +110,7 @@
 
     <div class="absolute inset-0 flex items-center justify-center">
         <div class="flex flex-col items-center">
-            <h1 class="text-white text-6xl md:text-8xl font-bold tracking-wider" style="text-shadow: 0px 4px 8px rgba(0,0,0,0.4);">
+            <h1 class="text-black text-6xl md:text-8xl font-bold tracking-wider" style="text-shadow: 0 4px 8px rgba(0,0,0,0.4);">
                 wheely
             </h1>
         </div>
