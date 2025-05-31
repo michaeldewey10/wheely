@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wheely</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gay Pride Flag</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the flag stripes */
+        .flag-stripe {
+            height: calc(100% / 6); /* Divide the flag height by the number of stripes */
+            width: 100%;
+        }
+        /* Custom font for the body */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+    </style>
 </head>
-<body>
-Hi
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+<div class="relative w-full max-w-md h-96 bg-white rounded-lg shadow-xl overflow-hidden flex flex-col">
+    <div class="flag-stripe bg-red-500"></div>
+    <div class="flag-stripe bg-orange-400"></div>
+    <div class="flag-stripe bg-yellow-300"></div>
+    <div class="flag-stripe bg-green-500"></div>
+    <div class="flag-stripe bg-blue-600"></div>
+    <div class="flag-stripe bg-purple-700"></div>
+
+    <div class="absolute inset-0 flex items-center justify-center">
+        <h1 class="text-white text-6xl md:text-8xl font-extrabold tracking-wider drop-shadow-lg" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.7);">
+            wheely
+        </h1>
+    </div>
+</div>
 </body>
 </html>
