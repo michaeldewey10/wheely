@@ -6,45 +6,125 @@
     <title>wheely</title>
     <link rel="icon" type="image/webp" href="flag.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Cool fonts with special characters -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Fredoka:wght@400;600&family=Righteous&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Material Design 3 Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Material Design 3 Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for the flag stripes */
-        .flag-stripe {
-            height: calc(100% / 6); /* Divide the flag height by the number of stripes */
-            width: 100%;
+        :root {
+            /* Material Design 3 Color System - Pride Theme */
+            --md-primary: #6750A4;
+            --md-on-primary: #FFFFFF;
+            --md-primary-container: #EADDFF;
+            --md-on-primary-container: #21005E;
+            --md-secondary: #625B71;
+            --md-on-secondary: #FFFFFF;
+            --md-secondary-container: #E8DEF8;
+            --md-on-secondary-container: #1E192B;
+            --md-tertiary: #7D5260;
+            --md-on-tertiary: #FFFFFF;
+            --md-tertiary-container: #FFD8E4;
+            --md-on-tertiary-container: #370B1E;
+            --md-surface: #FEF7FF;
+            --md-on-surface: #1C1B1F;
+            --md-surface-variant: #E7E0EC;
+            --md-on-surface-variant: #49454E;
+            --md-outline: #79747E;
+            --md-outline-variant: #CAC4D0;
+            --md-shadow: rgba(0, 0, 0, 0.3);
+
+            /* Pride flag colors - Material Design 3 style */
+            --pride-red: #EF5350;
+            --pride-orange: #FF9800;
+            --pride-yellow: #FFEB3B;
+            --pride-green: #66BB6A;
+            --pride-blue: #42A5F5;
+            --pride-purple: #AB47BC;
         }
-        /* Custom font for the body */
+
+        /* Material Design 3 Typography */
         body {
-            font-family: "Inter", sans-serif;
+            font-family: 'Roboto', sans-serif;
             cursor: default !important;
+            background-color: var(--md-surface);
+            color: var(--md-on-surface);
         }
-        
+
         /* Force default cursor everywhere */
         * {
             cursor: default !important;
         }
-        
-        /* Smooth transition for the text movement */
-        .avoidable-text {
-            transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: transform;
+
+        /* Custom styles for the flag stripes with Material Design 3 colors */
+        .flag-stripe {
+            height: calc(100% / 6);
+            width: 100%;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); /* Material Design 3 standard easing */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Material Design 3 ripple effect */
+        .flag-stripe::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0);
+            transition: background-color 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+
+        /* Material Design 3 elevation */
+        .md-elevation-1 {
+            box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 
+                        0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+        }
+
+        .md-elevation-2 {
+            box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 
+                        0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+        }
+
+        .md-elevation-3 {
+            box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 
+                        0px 1px 3px 0px rgba(0, 0, 0, 0.30);
+        }
+
+
+        /* Material Design 3 card with dynamic elevation */
+        .md-card {
+            background-color: var(--pride-purple);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        /* Material Design 3 state changes */
+        .md-card:hover {
+            box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 
+                        0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+            transform: translateY(-2px);
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-<div class="relative w-full h-screen bg-white shadow-xl overflow-hidden flex flex-col">
-    <div class="flag-stripe bg-red-500"></div>
-    <div class="flag-stripe bg-orange-400"></div>
-    <div class="flag-stripe bg-yellow-300"></div>
-    <div class="flag-stripe bg-green-500"></div>
-    <div class="flag-stripe bg-blue-600"></div>
-    <div class="flag-stripe bg-purple-700"></div>
+<body class="flex items-center justify-center min-h-screen p-4">
+<div class="md-card md-elevation-3 relative w-full max-w-4xl h-screen max-h-[800px] overflow-hidden flex flex-col">
+    <div class="flag-stripe" style="background-color: var(--pride-red);"></div>
+    <div class="flag-stripe" style="background-color: var(--pride-orange);"></div>
+    <div class="flag-stripe" style="background-color: var(--pride-yellow);"></div>
+    <div class="flag-stripe" style="background-color: var(--pride-green);"></div>
+    <div class="flag-stripe" style="background-color: var(--pride-blue);"></div>
+    <div class="flag-stripe" style="background-color: var(--pride-purple);"></div>
 
     <div class="absolute inset-0 flex items-center justify-center">
-        <h1 id="avoidable-text" class="avoidable-text text-white text-6xl md:text-8xl font-extrabold tracking-wider drop-shadow-lg" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.7);">
-            wheely
-        </h1>
+        <div class="flex flex-col items-center">
+            <h1 class="text-white text-6xl md:text-8xl font-bold tracking-wider" style="text-shadow: 0px 4px 8px rgba(0,0,0,0.4);">
+                wheely
+            </h1>
+        </div>
     </div>
 </div>
 
@@ -54,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function createSlidingOrbsTitle() {
         const coloredOrbs = ['🔴', '🟠', '🟡', '🟢', '🔵', '🟣'];
         let startIndex = 0;
-        
+
         function animateTitle() {
             // Show 6 orbs sliding to the right (full rainbow)
             let title = '';
@@ -62,159 +142,79 @@ document.addEventListener('DOMContentLoaded', function() {
                 const orbIndex = (startIndex + i) % coloredOrbs.length;
                 title += coloredOrbs[orbIndex];
             }
-            
+
             document.title = title;
-            
+
             // Update favicon color based on leftmost orb
             window.currentLeftmostColorIndex = startIndex % coloredOrbs.length;
-            
+
             startIndex = (startIndex + 1) % coloredOrbs.length;
             setTimeout(animateTitle, 300); // Slide every 300ms
         }
-        
+
         animateTitle();
     }
-    
-    // Animated Favicon - Pulsing ball that changes color
+
+    // Animated Favicon - Pulsing ball that changes color with Material Design 3 colors
     function createPulsingFavicon() {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = 32;
         canvas.height = 32;
-        
-        const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#2563eb', '#9333ea'];
+
+        // Material Design 3 colors for the pride flag
+        const colors = [
+            getComputedStyle(document.documentElement).getPropertyValue('--pride-red').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--pride-orange').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--pride-yellow').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--pride-green').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--pride-blue').trim(),
+            getComputedStyle(document.documentElement).getPropertyValue('--pride-purple').trim()
+        ];
+
         let pulsePhase = 0;
-        
+
         function animate() {
             ctx.clearRect(0, 0, 32, 32);
-            
-            // Calculate pulsing radius (between 8 and 14 pixels)
-            const baseRadius = 11;
-            const pulseAmount = 3;
+
+            // Material Design 3 style animation with smoother easing
+            const baseRadius = 12;
+            const pulseAmount = 2.5;
             const radius = baseRadius + Math.sin(pulsePhase) * pulseAmount;
-            
+
             // Get current color based on leftmost title orb
             const colorIndex = window.currentLeftmostColorIndex || 0;
             const currentColor = colors[colorIndex];
-            
-            // Draw the pulsing circle
+
+            // Draw the pulsing circle with Material Design 3 style
             ctx.beginPath();
             ctx.arc(16, 16, radius, 0, 2 * Math.PI);
             ctx.fillStyle = currentColor;
             ctx.fill();
-            
-            // Add a subtle white highlight for 3D effect
+
+            // Add a subtle white highlight for Material Design 3 style
             ctx.beginPath();
-            ctx.arc(13, 13, radius * 0.3, 0, 2 * Math.PI);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.arc(13, 13, radius * 0.35, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
             ctx.fill();
-            
+
             const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
             link.type = 'image/x-icon';
             link.rel = 'icon';
             link.href = canvas.toDataURL();
             document.getElementsByTagName('head')[0].appendChild(link);
-            
-            pulsePhase += 0.15; // Control pulse speed
-            setTimeout(animate, 100); // 10 FPS for smooth animation
+
+            pulsePhase += 0.12; // Slightly slower for more elegant animation
+            requestAnimationFrame(animate); // Use requestAnimationFrame for smoother animation
         }
-        
+
         animate();
     }
-    
+
     // Start animations
     createSlidingOrbsTitle();
     createPulsingFavicon();
 
-    // Mouse avoidance code
-    const text = document.getElementById('avoidable-text');
-    const container = document.querySelector('.relative');
-    
-    // Configuration for no-overlap avoidance
-    const minDistance = 120; // Minimum safe distance from mouse
-    const maxOffset = 300; // Maximum movement distance
-    const forceMultiplier = 2.5; // Strong repulsion force
-    
-    container.addEventListener('mousemove', function(e) {
-        const rect = text.getBoundingClientRect();
-        const textCenterX = rect.left + rect.width / 2;
-        const textCenterY = rect.top + rect.height / 2;
-        const textWidth = rect.width;
-        const textHeight = rect.height;
-        
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-        
-        // Calculate distance between mouse and text center
-        const distanceX = textCenterX - mouseX;
-        const distanceY = textCenterY - mouseY;
-        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-        
-        // Calculate the minimum distance needed considering text dimensions
-        const textRadius = Math.sqrt((textWidth/2) * (textWidth/2) + (textHeight/2) * (textHeight/2));
-        const requiredDistance = minDistance + textRadius;
-        
-        if (distance < requiredDistance) {
-            // Calculate repulsion vector
-            let angle = Math.atan2(distanceY, distanceX);
-            
-            // If mouse is too close to center, push in a random direction
-            if (distance < 10) {
-                angle = Math.random() * 2 * Math.PI;
-            }
-            
-            // Calculate required offset to maintain minimum distance
-            const targetDistance = requiredDistance;
-            const currentDistance = distance;
-            const pushDistance = targetDistance - currentDistance;
-            
-            // Apply strong repulsion force
-            const force = Math.max(1, pushDistance / minDistance * forceMultiplier);
-            
-            const offsetX = Math.cos(angle) * Math.min(maxOffset, pushDistance * force);
-            const offsetY = Math.sin(angle) * Math.min(maxOffset, pushDistance * force);
-            
-            // Apply boundary constraints to keep text on screen
-            const containerRect = container.getBoundingClientRect();
-            const maxX = (containerRect.width - textWidth) / 2 - 20;
-            const maxY = (containerRect.height - textHeight) / 2 - 20;
-            
-            const clampedOffsetX = Math.max(-maxX, Math.min(maxX, offsetX));
-            const clampedOffsetY = Math.max(-maxY, Math.min(maxY, offsetY));
-            
-            text.style.transform = `translate(${clampedOffsetX}px, ${clampedOffsetY}px)`;
-        } else {
-            // Gradually return to center when mouse is far enough
-            const returnForce = Math.max(0, 1 - (distance - requiredDistance) / 200);
-            const currentTransform = text.style.transform;
-            
-            if (currentTransform && returnForce > 0.1) {
-                // Extract current position
-                const matches = currentTransform.match(/translate\((-?\d+(?:\.\d+)?)px,\s*(-?\d+(?:\.\d+)?)px\)/);
-                if (matches) {
-                    const currentX = parseFloat(matches[1]);
-                    const currentY = parseFloat(matches[2]);
-                    
-                    // Gradually move back to center
-                    const newX = currentX * (1 - returnForce * 0.1);
-                    const newY = currentY * (1 - returnForce * 0.1);
-                    
-                    if (Math.abs(newX) > 1 || Math.abs(newY) > 1) {
-                        text.style.transform = `translate(${newX}px, ${newY}px)`;
-                    } else {
-                        text.style.transform = 'translate(0px, 0px)';
-                    }
-                }
-            } else if (returnForce <= 0.1) {
-                text.style.transform = 'translate(0px, 0px)';
-            }
-        }
-    });
-    
-    // Reset position when mouse leaves the container
-    container.addEventListener('mouseleave', function() {
-        text.style.transform = 'translate(0px, 0px)';
-    });
 });
 </script>
 </body>
