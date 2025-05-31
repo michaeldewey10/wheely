@@ -15,6 +15,18 @@
         /* Custom font for the body */
         body {
             font-family: "Inter", sans-serif;
+            cursor: default !important;
+        }
+        
+        /* Force default cursor everywhere */
+        * {
+            cursor: default !important;
+        }
+        
+        /* Smooth transition for the text movement */
+        .avoidable-text {
+            transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
         }
     </style>
 </head>
@@ -28,10 +40,101 @@
     <div class="flag-stripe bg-purple-700"></div>
 
     <div class="absolute inset-0 flex items-center justify-center">
-        <h1 class="text-white text-6xl md:text-8xl font-extrabold tracking-wider drop-shadow-lg" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.7);">
+        <h1 id="avoidable-text" class="avoidable-text text-white text-6xl md:text-8xl font-extrabold tracking-wider drop-shadow-lg" style="text-shadow: 4px 4px 8px rgba(0,0,0,0.7);">
             wheely
         </h1>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const text = document.getElementById('avoidable-text');
+    const container = document.querySelector('.relative');
+    
+    // Configuration for no-overlap avoidance
+    const minDistance = 120; // Minimum safe distance from mouse
+    const maxOffset = 300; // Maximum movement distance
+    const forceMultiplier = 2.5; // Strong repulsion force
+    
+    container.addEventListener('mousemove', function(e) {
+        const rect = text.getBoundingClientRect();
+        const textCenterX = rect.left + rect.width / 2;
+        const textCenterY = rect.top + rect.height / 2;
+        const textWidth = rect.width;
+        const textHeight = rect.height;
+        
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        
+        // Calculate distance between mouse and text center
+        const distanceX = textCenterX - mouseX;
+        const distanceY = textCenterY - mouseY;
+        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        
+        // Calculate the minimum distance needed considering text dimensions
+        const textRadius = Math.sqrt((textWidth/2) * (textWidth/2) + (textHeight/2) * (textHeight/2));
+        const requiredDistance = minDistance + textRadius;
+        
+        if (distance < requiredDistance) {
+            // Calculate repulsion vector
+            let angle = Math.atan2(distanceY, distanceX);
+            
+            // If mouse is too close to center, push in a random direction
+            if (distance < 10) {
+                angle = Math.random() * 2 * Math.PI;
+            }
+            
+            // Calculate required offset to maintain minimum distance
+            const pushDistance = requiredDistance - distance;
+            
+            // Apply strong repulsion force
+            const force = Math.max(1, pushDistance / minDistance * forceMultiplier);
+            
+            const offsetX = Math.cos(angle) * Math.min(maxOffset, pushDistance * force);
+            const offsetY = Math.sin(angle) * Math.min(maxOffset, pushDistance * force);
+            
+            // Apply boundary constraints to keep text on screen
+            const containerRect = container.getBoundingClientRect();
+            const maxX = (containerRect.width - textWidth) / 2 - 20;
+            const maxY = (containerRect.height - textHeight) / 2 - 20;
+            
+            const clampedOffsetX = Math.max(-maxX, Math.min(maxX, offsetX));
+            const clampedOffsetY = Math.max(-maxY, Math.min(maxY, offsetY));
+            
+            text.style.transform = `translate(${clampedOffsetX}px, ${clampedOffsetY}px)`;
+        } else {
+            // Gradually return to center when mouse is far enough
+            const returnForce = Math.max(0, 1 - (distance - requiredDistance) / 200);
+            const currentTransform = text.style.transform;
+            
+            if (currentTransform && returnForce > 0.1) {
+                // Extract current position
+                const matches = currentTransform.match(/translate\((-?\d+(?:\.\d+)?)px,\s*(-?\d+(?:\.\d+)?)px\)/);
+                if (matches) {
+                    const currentX = parseFloat(matches[1]);
+                    const currentY = parseFloat(matches[2]);
+                    
+                    // Gradually move back to center
+                    const newX = currentX * (1 - returnForce * 0.1);
+                    const newY = currentY * (1 - returnForce * 0.1);
+                    
+                    if (Math.abs(newX) > 1 || Math.abs(newY) > 1) {
+                        text.style.transform = `translate(${newX}px, ${newY}px)`;
+                    } else {
+                        text.style.transform = 'translate(0px, 0px)';
+                    }
+                }
+            } else if (returnForce <= 0.1) {
+                text.style.transform = 'translate(0px, 0px)';
+            }
+        }
+    });
+    
+    // Reset position when mouse leaves the container
+    container.addEventListener('mouseleave', function() {
+        text.style.transform = 'translate(0px, 0px)';
+    });
+});
+</script>
 </body>
 </html>
